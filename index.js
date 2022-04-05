@@ -5,12 +5,13 @@ const path = require('path');
 
 //requerir express
 const express = require('express');
+require('dotenv').config
 
 //inicializar express
 const app = express();
 
 //settings... | : 124... ` : 96... ~ : 126
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 
 
 //Files from frontend folder
