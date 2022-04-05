@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: La Vieja</title>
+    <!--Letra de google fonts "Nunito"-->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,500&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="main.css">
+    
+</head>
+<body>
+    
+    <div id="chat-container">
+        <div id="chat-window">
+            <div id="output"></div>
+            <div id="actions"></div>          
+        </div>
+        <input type="text" id="username" placeholder="Username">
+        <input type="text" id="message" placeholder="Message">
+        <button id="send">Send</button>
+    </div>
+    
+       
+    
+    
+    <div class="board">
+        <button id="a0"></button>
+        <button id="a1"></button>
+        <button id="a2"></button>
+        <button id="b0"></button>
+        <button id="b1"></button>
+        <button id="b2"></button>
+        <button id="c0"></button>
+        <button id="c1"></button>
+        <button id="c2"></button>
+        <div id="messages">Waiting for opponent to join...</div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+    <script  src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+    <script src="chat.js" charset="utf-8"></script>
+    
+</body>
+</html>
