@@ -1,8 +1,8 @@
 const socket = io()
 
 //Elementos del DOM (de html). Nota: document es una variable de js
-let message = document.getElementById('message');
 let username = document.getElementById('username');
+let message = document.getElementById('message');
 let btn = document.getElementById('send');
 let output = document.getElementById('output');
 let actions = document.getElementById('actions');
@@ -14,6 +14,7 @@ btn.addEventListener('click', function () {
     });
 });
 
+//Cuando se envía un mensaje pulsando el botón, se imprime en consola un objeto con Usuario y Mensaje
 console.log({
     username: username.value,
     message: message.value
@@ -24,7 +25,7 @@ message.addEventListener('keypress', function (){
     socket.emit('chat:typing', username.value);
 });
 
-//muestra en div output el username y el mensaje en todas las ventanas
+//muestra en div output el usuario con su mensaje en todas las ventanas
 socket.on('chat:message', function(data) {
     actions.innerHTML = ``;
     console.log(data)
@@ -34,23 +35,24 @@ socket.on('chat:message', function(data) {
 });
 
 socket.on('chat:typing', function (data) {
-    actions.innerHTML = `<p><en>${data} is typing a message...</en></p>`
+    actions.innerHTML = `<p><en>${data} está escribiendo un mensaje...</en></p>`
 });
 
+//Variable para el juego de la vieja (símbolo X or O)
 var symbol;
+
 $(function () {
     $(".board button").attr("disabled", true);
     $(".board> button").on("click", makeMove);
-    // Event is called when either player makes a move
+    // Evento es llamado cuando cuando cualquiera de los jugadores hace un movimiento
     socket.on("move.made", function (data) {
-        // Render the move
+        // Hacer el movimiento
         $("#" + data.position).text(data.symbol);
-        // If the symbol is the same as the player's symbol,
-        // we can assume it is their turn
+        // Si el símbolo es el mismo que el símbolo del jugador, podemos asumir que es su turno.
         
         myTurn = data.symbol !== symbol;
         
-        // If the game is still going, show who's turn it is
+        // Mostrar de quién es el turno, cuando el juego no ha culminado
         if (!isGameOver()) {
             if (gameTied()) {
                 $("#messages").text("¡Juego empatado!");
@@ -58,30 +60,30 @@ $(function () {
             } else {
                 renderTurnMessage();
             }
-            // If the game is over
+            // Cuando el juego termina
         } else {
-            // Show the message for the loser
+            // Mensaje para el perdedor
             if (myTurn) {
                 $("#messages").text("Juego terminado. Perdiste...");
-                // Show the message for the winner
+                // Mensaje para el ganador
             } else {
                 $("#messages").text("Juego terminado. ¡Ganaste!");
             }
-            // Disable the board
+            // Desabilitar el board o tabla de juego
             $(".board button").attr("disabled", true);
         }
     });
     
-    // Set up the initial state when the game begins
+    // Estado inicial cuando el juego inicia
     socket.on("game.begin", function (data) {
-        // The server will asign X or O to the player
+        // El servidor asignará un símbolo a cada jugador (X or O)
         symbol = data.symbol;
-        // Give X the first turn
+        // Entregar la X al jugaador con primer turno
         myTurn = symbol === "X";
         renderTurnMessage();
     });
     
-    // Disable the board if the opponent leaves
+    // Desabilitar tabla o board si uno de los jugadores se desconecta
     socket.on("opponent.left", function () {
         $("#messages").text("Contrincante desconectado.");
         $(".board button").attr("disabled", true);
@@ -90,8 +92,7 @@ $(function () {
 
 function getBoardState() {
     var obj = {};
-    // We will compose an object of all of the Xs and Ox
-    // that are on the board
+    // Componiendo un objeto de todas las equis y os que se encuentran en la tabla
     $(".board button").each(function () {
         obj[$(this).attr("id")] = $(this).text() || "";
     });
@@ -119,12 +120,10 @@ function gameTied() {
     
     function isGameOver() {
         var state = getBoardState(),
-        // One of the rows must be equal to either of these
-        // value for
-        // the game to be over
+        // Una de las filas debe de ser igual a alguno de estos para acabar el juego
         matches = ["XXX", "OOO"],
-        // These are all of the possible combinations
-        // that would win the game
+        // Estas son las posibles combinaciones para ganar el juego (fila, columna o diagonal) - por convención se elige las letras a, b y c y
+        //números 0, 1 y 2
         rows = [
             state.a0 + state.a1 + state.a2,
             state.b0 + state.b1 + state.b2,
@@ -136,7 +135,7 @@ function gameTied() {
             state.a2 + state.b2 + state.c2,
         ];
         
-        // to either 'XXX' or 'OOO'
+        // para ambos: XXX or OOO
         for (var i = 0; i < rows.length; i++) {
             if (rows[i] === matches[0] || rows[i] === matches[1]) {
                 return true;
@@ -145,11 +144,11 @@ function gameTied() {
     }
     
     function renderTurnMessage() {
-        // Disable the board if it is the opponents turn
+        // Desabilitar la tabla si es el turno del contrincante
         if (!myTurn) {
             $("#messages").text("No es tu turno.");
             $(".board button").attr("disabled", true);
-            // Enable the board if it is your turn
+            // Habilitar la tabla si es tu turno
         } else {
             $("#messages").text("Viene tu turno.");
             $(".board button").removeAttr("disabled");
@@ -158,16 +157,16 @@ function gameTied() {
     
     function makeMove(e) {
         e.preventDefault();
-        // It's not your turn
+        // No es tu turno
         if (!myTurn) {
             return;
         }
-        // The space is already checked
+        // El espacio del cuadro ya está seleccionado
         if ($(this).text().length) {
             return;
         }
         
-        // Emit the move to the server
+        // Enviar movimiento elegido al servidor con el uso del evento de socket.io "emit"
         socket.emit("make.move", {
             symbol: symbol,
             position: $(this).attr("id"),

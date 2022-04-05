@@ -30,6 +30,7 @@
     </div>
     
     <br>
+
     <div id="chat-container">
         <div id="chat-window">
             <div id="output"></div>
@@ -39,10 +40,13 @@
         <input type="text" id="message" placeholder="Mensaje">
         <button id="send">Enviar</button>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+
+    <!--uso de jquery code. Hace el uso de html más simple y dar vida al juego de la vieja-->
     <script  src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <!--Requiriendo el archivo de socket.io para que el cliente también esté conectado al websocket-->
     <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+
     <script src="game.js" charset="utf-8"></script>
     
 </body>

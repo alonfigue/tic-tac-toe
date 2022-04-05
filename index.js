@@ -1,48 +1,46 @@
-// SERVIDOR
+// index.js es el SERVIDOR
 
-//modulo de nodejs que permite trabajar con las rutas
+
+//Modulo de nodejs que permite trabajar con las rutas
 const path = require('path');
 
-//requerir express
+//requerir express (framwork de nodejs) y dotenv para usar variables de entorno (PORT)
 const express = require('express');
 require('dotenv').config
 
-//inicializar express
+//inicializando express
 const app = express();
 
-//settings... | : 124... ` : 96... ~ : 126
+//código ASCII, |:124, `:96, ~:126
 app.set('port', process.env.PORT || 5000);
 
-
-//Files from frontend folder
+//Send the folder frontend to the browser. Esta es la ruta que app usa para desplegar lo que se encuentra en la carpeta "folder"
+app.use(express.static(path.join(__dirname, 'frontend')));
 //console.log(path.join(__dirname, 'frontend'));
 
-//Send the folder frontend to the browser
-app.use(express.static(path.join(__dirname, 'frontend')));
-
-
-//start server (servidor realizado). Guardar esto en la constante server
+//start server (servidor realizado). Guardando esto en la constante server
 const server = app.listen(app.get('port'), () => {
-    console.log('Server on port', app.get('port'));
+    console.log('Servidor escuchando en el puerto', app.get('port'));
 });
-
 
 // websockets
 //Bidirectional connection (modulo socketio)
 const socketio = require('socket.io')
-//Escuchar el servidor mediante la variable server (aqui ya socketio esta configurado)
+
+//Escuchar el servidor mediante la constante creada llamada server (aqui ya socketio esta configurado)
 const io = socketio(server);
 
 
 
-
+//creando variables para el juego de la vieja
 var players = {},
 unmatched;
 
 
+// eventos on (escuchar) y emit (enviar)
 //escuchar evento "connection" con su metodo "on"
 io.on('connection', (socket) =>  {
-    console.log('new connecion', socket.id);
+    console.log('- ID of new connection:', socket.id);
     joinGame(socket);
     
     socket.on('chat:message', (data) => {
@@ -55,6 +53,7 @@ io.on('connection', (socket) =>  {
         //console.log(data);
     })
     
+
     if (getOpponent(socket)) {
         socket.emit("game.begin", {
             symbol: players[socket.id].symbol,
@@ -86,7 +85,7 @@ function joinGame(socket) {
         opponent: unmatched,
         
         symbol: "X",
-        // The socket that is associated with this player
+        // El socket que se encuentra asociado a este jugador
         socket: socket,
     };
     if (unmatched) {
@@ -104,7 +103,3 @@ function getOpponent(socket) {
     }
     return players[players[socket.id].opponent].socket;
 }
-
-
-// eventos on (escuchar) y emit (enviar)
-
