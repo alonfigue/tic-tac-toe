@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego: La Vieja</title>
+    <title>La Vieja</title>
+    <link rel="shortcut icon" type="image/x-icon" href="icon.png" />
     <!--Letra de google fonts "Nunito"-->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,500&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="main.css">
-    
 </head>
-<body>
+
+<body>   
     
-    <div id="chat-container">
-        <div id="chat-window">
-            <div id="output"></div>
-            <div id="actions"></div>          
-        </div>
-        <input type="text" id="username" placeholder="Username">
-        <input type="text" id="message" placeholder="Message">
-        <button id="send">Send</button>
-    </div>
-    
-       
-    
+    <br><br>   
     
     <div class="board">
         <button id="a0"></button>
@@ -35,7 +26,18 @@
         <button id="c0"></button>
         <button id="c1"></button>
         <button id="c2"></button>
-        <div id="messages">Waiting for opponent to join...</div>
+        <div id="messages">Esperando conexión de un contrincante...</div>
+    </div>
+    
+    <br>
+    <div id="chat-container">
+        <div id="chat-window">
+            <div id="output"></div>
+            <div id="actions"></div>          
+        </div>
+        <input type="text" id="username" placeholder="Usuario">
+        <input type="text" id="message" placeholder="Mensaje">
+        <button id="send">Enviar</button>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>

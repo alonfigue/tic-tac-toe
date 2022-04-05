@@ -53,7 +53,7 @@ $(function () {
         // If the game is still going, show who's turn it is
         if (!isGameOver()) {
             if (gameTied()) {
-                $("#messages").text("Game Drawn!");
+                $("#messages").text("¡Juego empatado!");
                 $(".board button").attr("disabled", true);
             } else {
                 renderTurnMessage();
@@ -62,10 +62,10 @@ $(function () {
         } else {
             // Show the message for the loser
             if (myTurn) {
-                $("#messages").text("Game over. You lost.");
+                $("#messages").text("Juego terminado. Perdiste...");
                 // Show the message for the winner
             } else {
-                $("#messages").text("Game over. You won!");
+                $("#messages").text("Juego terminado. ¡Ganaste!");
             }
             // Disable the board
             $(".board button").attr("disabled", true);
@@ -83,7 +83,7 @@ $(function () {
     
     // Disable the board if the opponent leaves
     socket.on("opponent.left", function () {
-        $("#messages").text("Your opponent left the game.");
+        $("#messages").text("Contrincante desconectado.");
         $(".board button").attr("disabled", true);
     });
 });
@@ -147,11 +147,11 @@ function gameTied() {
     function renderTurnMessage() {
         // Disable the board if it is the opponents turn
         if (!myTurn) {
-            $("#messages").text("Your opponent's turn");
+            $("#messages").text("No es tu turno.");
             $(".board button").attr("disabled", true);
             // Enable the board if it is your turn
         } else {
-            $("#messages").text("Your turn.");
+            $("#messages").text("Viene tu turno.");
             $(".board button").removeAttr("disabled");
         }
     }
