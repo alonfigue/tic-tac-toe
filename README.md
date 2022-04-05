@@ -1,4 +1,16 @@
-# tic-tac-toe
-tic-tac-toe game developed using Node.js and Socket.IO
+# Tic Tac Toe Game + Chat
 
-inicializar con npm start (sin nodemon) o con npm run dev (con nodemon)
+This is a project that was specially made for the gamers that love the Tic Tac Toe game. This was developed using Node.js and Socket.IO
+
+---
+
+
+## *How to use it:*
+1. Clone the project, then install dependencies by typing in the console "npm i".
+2. Initialize by typing in console "npm start" (without nodemon) or "npm run dev" (with nodemon).
+3. Use the browser to open the game.
+4. Open another window of the browser and start to play.
+
+## *Demonstration of the game:*
+
+![imagen](https://user-images.githubusercontent.com/65868683/161683342-5c114858-e0ed-4e27-91f0-6ec57c9c5eb6.png)
