@@ -2,7 +2,7 @@
 
 This is a project that was specially made for the gamers that love the Tic Tac Toe game. This was developed using Node.js and Socket.IO
 
-Developers: Figueroa Alonso, C.I. V-28536894 and Perez Jairo, C.I. V-.
+Developers: Figueroa Alonso, C.I. V-28536894 and Perez Jairo, C.I. V-28336214.
 
 ---
 
